@@ -3,9 +3,9 @@ import { galleryItems } from './gallery-items.js';
 const container = document.querySelector('.gallery')
 
 const createMarkup = galleryItems.map(({ preview, original, description }) =>
-    `<li data-prewiew = "${preview}" class="gallery__item">
+    `<li class="gallery__item">
     <a class="gallery__link" href="${original}">
-    <img src="${preview}" data-source="${original}" alt="${description}" class="gallery__image"
+    <img src="${preview}" data-source="${original}" alt="${description}" class="gallery__image"/>
     </a>
     </li>`
 ).join("");
@@ -15,17 +15,15 @@ container.addEventListener("click", handleClick);
 
 function handleClick(event) {
     event.preventDefault();
-    if (event.target.tagName === 'img') {
-        const galleryItem = event.target.getAttribute('data-source');
+    if (event.target.tagName !== 'IMG') {
+        return
     };
-
+    const galleryItem = event.target.dataset.source;
     const instance = basicLightbox.create(
         `<div clas="modal">
-        <img src="${handleClick.galleryItem}", alt="${event.target.alt}">
+        <img src="${galleryItem}", alt="${event.target.alt}">
         </div>`
     );
-
     instance.show();
 }
-
 console.log(galleryItems);
